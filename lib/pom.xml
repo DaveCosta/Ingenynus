@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- model version - always 4.0.0 for Maven 2.x POMs -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- project coordinates - values which uniquely identify this project -->
+    <parent>
+        <groupId>org.mephys.ingenyus</groupId>
+        <artifactId>project</artifactId>
+        <version>0.0.2</version>
+    </parent>
+
+    <artifactId>lib</artifactId>
+
+    <packaging>jar</packaging>
+    <description>Java Library</description>
+
+    <build>
+        <plugins>
+            <!-- Configure maven-compiler-plugin to use the desired Java version -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

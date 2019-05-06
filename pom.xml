@@ -1,138 +1,139 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <!-- model version - always 4.0.0 for Maven 2.x POMs -->
-  <modelVersion>4.0.0</modelVersion>
+    <!-- model version - always 4.0.0 for Maven 2.x POMs -->
+    <modelVersion>4.0.0</modelVersion>
 
-  <!-- project coordinates - values which uniquely identify this project -->
-  <groupId>com.konodi.ingenyus</groupId>
-  <artifactId>ingenyus</artifactId>
-  <version>0.0.2</version>
-  <packaging>jar</packaging>
-   <description>Jubatus Programming language</description>
+    <!-- project coordinates - values which uniquely identify this project -->
+    <groupId>org.mephys.ingenyus</groupId>
+    <artifactId>project</artifactId>
+    <version>0.0.2</version>
+    <packaging>pom</packaging>
+    <description>Jubatus Programming language</description>
 
-<developers>
-    <developer>
-        <id>dacosta</id>
-        <name>David Da Costa</name>
-        <email>david.dacosta@coremedia.com</email>
-        <url>http://web.ist.utl.pt/david.costa/</url>
-        <roles>
-            <role>architect</role>
-            <role>developer</role>
-        </roles>
-        <timezone>Germany, Europe/Berlin</timezone>
-        <properties>
-            <picUrl>http://web.ist.utl.pt/david.costa/img/photo.jpg</picUrl>
-        </properties>
-    </developer>
-</developers>
+    <developers>
+        <developer>
+            <id>dacosta</id>
+            <name>David Da Costa</name>
+            <email>david.dacosta@coremedia.com</email>
+            <url>http://web.ist.utl.pt/david.costa/</url>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>Germany, Europe/Berlin</timezone>
+            <properties>
+                <picUrl>http://web.ist.utl.pt/david.costa/img/photo.jpg</picUrl>
+            </properties>
+        </developer>
+    </developers>
 
-<licenses>
-    <license>
-        <name>Apache License, Version 2.0</name>
-        <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-    </license>
-</licenses>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
-<properties>
-    <java.version>1.8</java.version>
-    <scala.version>2.12.8</scala.version>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <springframework.boot.version>2.0.0.RELEASE</springframework.boot.version>
-    <failOnMissingWebXml>false</failOnMissingWebXml>
-</properties>
+    <properties>
+        <java.version>1.8</java.version>
+        <scala.version>2.12.8</scala.version>
+        <kotlin.version>1.3.31</kotlin.version>
+        <android.sdk.path>/Users/ddacosta/Library/Android/sdk</android.sdk.path>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <springframework.boot.version>2.0.0.RELEASE</springframework.boot.version>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+    </properties>
 
-<build>
-    <plugins>
-        <!-- Configure maven-compiler-plugin to use the desired Java version -->
-        <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.0</version>
-            <configuration>
-                <source>${java.version}</source>
-                <target>${java.version}</target>
-            </configuration>
-        </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <addClasspath>true</addClasspath>
-                        <mainClass>org.mephys</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
-        
-        <!-- Use scala-maven-plugin for Scala support -->
-        <plugin>
-            <groupId>net.alchim31.maven</groupId>
-            <artifactId>scala-maven-plugin</artifactId>
-            <version>3.1.5</version>
-            <executions>
-                <execution>
-                    <id>scala-compile-first</id>
-                    <phase>process-resources</phase>
-                    <goals>
-                        <goal>add-source</goal>
-                        <goal>compile</goal>
-                    </goals>
-                </execution>
-                <execution>
-                    <id>scala-test-compile</id>
-                    <phase>process-test-resources</phase>
-                    <goals>
-                        <goal>testCompile</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-        
-        <!-- Plugin to create a single jar that includes all dependencies -->
-        <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <version>2.4</version>
-            <configuration>
-                <descriptorRefs>
-                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                </descriptorRefs>
-                <appendAssemblyId>false</appendAssemblyId>
-                <archive>
-                    <manifest>
-                        <mainClass>org.mephys.ingenyus.Ingenyus</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-            <executions>
-                <execution>
-                    <id>make-assembly</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>single</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Configure maven-compiler-plugin to use the desired Java version -->
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <!--<plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <mainClass>org.mephys.scala.ingenyus</mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>-->
 
-<dependencies>
-    <dependency>
-        <groupId>org.scala-lang</groupId>
-        <artifactId>scala-library</artifactId>
-        <version>${scala.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.scala-lang</groupId>
-        <artifactId>scala-reflect</artifactId>
-        <version>${scala.version}</version>
-    </dependency>
-</dependencies>
+
+                <!-- Workaround for compatibility problem between Android and Kotlin Maven plugins
+                     See: http://youtrack.jetbrains.com/issue/KT-3679
+                     See: https://github.com/jayway/maven-android-plugin/issues/276
+                -->
+                <!-- <plugin>
+                     <artifactId>maven-antrun-plugin</artifactId>
+                     <executions>
+                         <execution>
+                             <id>generate-sources</id>
+                             <phase>generate-sources</phase>
+                             <configuration>
+                                 <tasks>
+                                     <mkdir dir="target/generated-sources/extracted-dependencies/src/main/java"/>
+                                 </tasks>
+                             </configuration>
+                             <goals>
+                                 <goal>run</goal>
+                             </goals>
+                         </execution>
+                     </executions>
+                 </plugin>-->
+
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-reflect</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
+
+            <!-- Android SDK -->
+            <dependency>
+                <groupId>com.google.android</groupId>
+                <artifactId>android</artifactId>
+                <version>4.1.1.4</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>android-app</module>
+        <module>lib</module>
+        <module>desktop-app</module>
+    </modules>
 
 </project>
