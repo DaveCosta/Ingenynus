@@ -1,10 +1,7 @@
 package org.mephys.ingenyus
 
-import android.os.Bundle
 import android.app.Activity
-import android.widget.TextView
-import android.widget.Button
-
+import android.os.Bundle
 
 class IngenyusActivity() : Activity() {
     protected override fun onCreate(savedInstanceState : Bundle?) {
