@@ -12,10 +12,17 @@
 LICENSE.txt
 .project
 .classpath
-.gradle
 .settings
 doc/
 build/
 .idea/
 target/
 out/
+
+
+# gradle
+.gradle/
+gradlew
+gradlew.bat
+gradle/
+gen/

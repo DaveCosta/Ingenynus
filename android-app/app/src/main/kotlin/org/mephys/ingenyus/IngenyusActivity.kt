@@ -5,32 +5,42 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
 import java.net.URL
+import java.util.*
 import java.util.concurrent.Executors
 
 
 class IngenyusActivity() : Activity() {
+
+    var result :String? = null
+
     protected override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var result :String? = null
+
 
        Executors.newSingleThreadExecutor().execute {
            result = URL("https://httpbin.org/get").readText()
+           result="ii"
         }
 
         Thread(Runnable {
-            // (1)
-            //This is in the onCreate method
-            val lView = LinearLayout(this)
 
-            val myText = TextView(this)
-            myText.setText(result)
+                // (1)
+                //This is in the onCreate method
+                val lView = LinearLayout(this)
 
-            lView.addView(myText)
+                val myText = TextView(this)
+                myText.setText(result)
 
-            setContentView(lView)
-        }).start()                       // (3)
+                lView.addView(myText)
+
+                setContentView(lView)
+
+        }).start()
+
+    fun onValueChange()={}
+
     }
 
 }
