@@ -101,8 +101,6 @@
             </plugin>
 
 
-
-
             <!-- Workaround for compatibility problem between Android and Kotlin Maven plugins
                  See: http://youtrack.jetbrains.com/issue/KT-3679
                  See: https://github.com/jayway/maven-android-plugin/issues/276
