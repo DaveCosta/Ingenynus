@@ -15,41 +15,90 @@
     <packaging>apk</packaging>
     <description>Mau Genio website support</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>4.1.1.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>androidx.appcompat</groupId>
+            <artifactId>appcompat</artifactId>
+            <version>1.1.0</version>
+            <scope>runtime</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>androidx.core</groupId>
+            <artifactId>core-ktx</artifactId>
+            <version>1.1.0</version>
+            <scope>runtime</scope>
+        </dependency>
+
+
+
+
+        <!-- Project related -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lib</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
-            <!-- Configure maven-compiler-plugin to use the desired Java version -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/kotlin</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
             </plugin>
-
             <plugin>
                 <groupId>com.simpligility.maven.plugins</groupId>
                 <artifactId>android-maven-plugin</artifactId>
                 <version>4.6.0</version>
                 <configuration>
                     <sdk>
-                        <path>${user.home}/Library/Android/sdk</path>
-                        <!-- platform or api level (api level 19 = 4.4)-->
                         <platform>28</platform>
                     </sdk>
-                    <androidManifestFile>${project.basedir}/app/src/main/AndroidManifest.xml</androidManifestFile>
-                    <assetsDirectory>${project.basedir}/app/src/main/assets/</assetsDirectory>
-                    <resourceDirectory>${project.basedir}/app/src/main/res/</resourceDirectory>
-                    <proguard>
-                        <skip>false</skip>
-                        <config>proguard.cfg</config>
-                        <outputDirectory>${project.build.directory}/proguard-${project.artifactId}</outputDirectory>
-                    </proguard>
                     <undeployBeforeDeploy>true</undeployBeforeDeploy>
-                    <attachSources>true</attachSources>
                 </configuration>
                 <extensions>true</extensions>
             </plugin>
 
-
-           <!-- <plugin>
+            <!-- Workaround for compatibility problem between Android and Kotlin Maven plugins
+                 See: http://youtrack.jetbrains.com/issue/KT-3679
+                 See: https://github.com/jayway/maven-android-plugin/issues/276
+            -->
+            <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
@@ -65,99 +114,40 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
 
-            <!-- Kotlin compiler -->
             <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlin.version}</version>
+                <groupId>org.jetbrains.kotlin</groupId>
                 <executions>
                     <execution>
                         <id>compile</id>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <sourceDir>${project.basedir}/app/src/main/kotlin</sourceDir>
-                                <sourceDir>${project.basedir}/app/src/main/java</sourceDir>
-                            </sourceDirs>
-                        </configuration>
                     </execution>
+
                     <execution>
                         <id>test-compile</id>
+                        <phase>process-test-sources</phase>
                         <goals>
                             <goal>test-compile</goal>
                         </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <sourceDir>${project.basedir}/app/src/main/kotlin</sourceDir>
-                                <sourceDir>${project.basedir}/app/src/main/java</sourceDir>
-                            </sourceDirs>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-
-            <!-- Workaround for compatibility problem between Android and Kotlin Maven plugins
-                 See: http://youtrack.jetbrains.com/issue/KT-3679
-                 See: https://github.com/jayway/maven-android-plugin/issues/276
-            -->
-            <!-- <plugin>
-                 <artifactId>maven-antrun-plugin</artifactId>
-                 <executions>
-                     <execution>
-                         <id>generate-sources</id>
-                         <phase>generate-sources</phase>
-                         <configuration>
-                             <tasks>
-                                 <mkdir dir="target/generated-sources/extracted-dependencies/src/main/java"/>
-                             </tasks>
-                         </configuration>
-                         <goals>
-                             <goal>run</goal>
-                         </goals>
-                     </execution>
-                 </executions>
-             </plugin>-->
-
         </plugins>
     </build>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>lib</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <!-- Android SDK -->
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <version>4.1.1.4</version>
-            <scope>provided</scope>
-        </dependency>
-
-<!--
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.3</version>
-        </dependency>
--->
-
-        <!-- kotlin -->
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib</artifactId>
-        </dependency>
-
-    </dependencies>
-
-
-
+    <repositories>
+        <repository>
+            <id>android-studio</id>
+            <name>lixo</name>
+            <url>https://mvnrepository.com/artifact</url>
+            <!-- <url>file://C:\Program Files\Android\Android Studio\gradle\m2repository</url> -->
+        </repository>
+    </repositories>
 
 </project>
